@@ -2,12 +2,15 @@ const {app, BrowserWindow} = require('electron');
 
 function makeWindow() {
     const window = new BrowserWindow({
-        width: 200, 
+        width: 300, 
         height: 200, 
         backgroundColor: '#ffb7ce',
         alwaysOnTop: true,
+        resizable: false,
+        frame: false,
+        transparent: true
     });
     window.loadFile('index.html');
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(makeWindow);

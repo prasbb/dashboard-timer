@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<style>
+body {
+  background: #ffe0eb;
+  font-family: Helvetica, Arial, sans-serif;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+}
+#time {
+  border-radius: 20px;
+  padding: 20px;
+  font-size: 3em;
+}
+button {
+  margin: 10px;
+  padding: 8px 16px;
+  background: white;
+  color: black;
+  font-size: 1em;
+  cursor: pointer;
+  display: flex;
+  gap: 10px;
+}
+</style>
+</head>
+<body>
+  <div id="time">00:00.0</div>
+    <div>
+    <button id="start-btn">Start Grind Time</button>
+    <button id="reset-btn">Reset</button>
+    </div>
+
+  <script>
+    let running = false;
+    let time = 0;
+    let interval = null;
+    const timeDisplay = document.getElementById('time');
+    const startButton = document.getElementById('start-btn');
+    const resetButton = document.getElementById('reset-btn');
+    function toggleTimer() {
+        if (running) {
+        clearInterval(interval);
+        running = false;
+        startButton.textContent = "Start Grind Time";
+        } else {
+        running = true;
+        startButton.textContent = "Pause Grind Time";
+        interval = setInterval(() => {
+            time += 0.1;
+            timeDisplay.textContent = formatTime(time);
+        }, 100);
+        }
+    }
+    function resetTimer() {
+        clearInterval(interval);
+        running = false;
+        time = 0;
+        timeDisplay.textContent = formatTime(time);
+        startButton.textContent = "Start Grind Time";
+    }
+    function formatTime(t) {
+        const minutes = Math.floor(t / 60);
+        const seconds = Math.floor(t) % 60;
+        const tenths = Math.floor((t * 10) % 10);
+        return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${tenths}`;
+    }
+    startButton.addEventListener('click', toggleTimer);
+    resetButton.addEventListener('click', resetTimer);
+  </script>
+</body>
+</html>
